@@ -1,0 +1,48 @@
+<?xml version="1.0"?> 
+<adios -config host -language="C"> 
+    <adios -group name="s3dio" coordination -communicator="comm"> 
+
+        <!-- Global array dimensions -->
+        <var name="x" gwrite="g_sizes(1)" type="integer"/> 
+        <var name="y" gwrite="g_sizes(2)" type="integer"/> 
+        <var name="z" gwrite="g_sizes(3)" type="integer"/> 
+
+        <!-- Local subarray dimensions -->
+        <var name="lx" gwrite="subsizes(1)" type="integer"/> 
+        <var name="ly" gwrite="subsizes(2)" type="integer"/> 
+        <var name="lz" gwrite="subsizes(3)" type="integer"/> 
+
+        <!-- Local subarray location -->
+        <var name="sx" gwrite="starts(1)" type="integer"/> 
+        <var name="sy" gwrite="starts(2)" type="integer"/> 
+        <var name="sz" gwrite="starts(3)" type="integer"/> 
+
+        <!-- nsc -->
+        <var name="nsc" gwrite="g_sizes(4)" type="integer"/> 
+
+        <!-- yspecies -->
+        <global -bounds dimensions="x, y, z, nsc" offsets="sx, sy, sz, 0"> 
+            <var name="yspecies" gwrite="yspecies" type="double" dimensions="lx, ly, lz, nsc" /> 
+        </global -bounds> 
+
+        <!-- u -->
+        <global -bounds dimensions="x, y, z, 3" offsets="sx, sy, sz, 0"> 
+            <var name="u" gwrite="u" type="double" dimensions="lx, ly, lz, 3" /> 
+        </global -bounds> 
+
+        <!-- pressure and temp -->
+        <global -bounds dimensions="x, y, z" offsets="sx, sy, sz"> 
+            <var name="pressure" gwrite="pressure" type="double" dimensions="lx, ly, lz" /> 
+            <var name="temp" gwrite="pressure" type="temp" dimensions="lx, ly, lz" /> 
+        </global -bounds> 
+
+        <!-- Attributes -->
+        <var name="time_var" gwrite="time" type="double"/> 
+        <var name="tstep_var" gwrite="tstep" type="double"/> 
+        <var name="time_save_var" gwrite="time_save" type="double"/> 
+        <attribute name="time" path="/s3dio" var="time_var" type="double"/>
+        <attribute name="tstep" path="/s3dio" var="tstep_var" type="double"/>
+        <attribute name="time_save" path="/s3dio" var="time_save_var" type="double"/>
+    </adios -group>
+    <method group="temperature" method="MPI"/> <buffer max-size -MB="2"/>
+</adios -config>
