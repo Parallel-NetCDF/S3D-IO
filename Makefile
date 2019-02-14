@@ -11,24 +11,25 @@
 
 MPIF90       = mpif90
 FCFLAGS      = -Wall -g
-PNETCDF_DIR  = $(HOME)/PnetCDF
+PNETCDF_DIR  = $(HOME)/.local/ncmpi_ad
+ADIOS_DIR    = $(HOME)/.local
 
 COMPILE_F90  = $(MPIF90) $(FCFLAGS) $(INC) -c
 LINK         = $(MPIF90) $(FCFLAGS)
-INC          = -I$(PNETCDF_DIR)/include
-LIBS         = -L$(PNETCDF_DIR)/lib -lpnetcdf
+INC          = -I$(PNETCDF_DIR)/include -I$(ADIOS_DIR)/include
+LIBS         = -L$(PNETCDF_DIR)/lib -L$(ADIOS_DIR)/lib -lpnetcdf -ladiosf -lpthread -ladiosread
 
 SRCS = runtime_m.f90 \
        param_m.f90 \
        topology_m.f90 \
        variables_m.f90 \
        io_profiling_m.f90 \
-       pnetcdf_m.f90 \
+       adios_m.f90 \
        init_field.f90 \
        io.f90 \
        random_number.f90 \
        solve_driver.f90 \
-       main.f90
+       main.f90 \
 
 OBJS = $(SRCS:.f90=.o)
 MODS = $(SRCS:.f90=.mod)
@@ -39,6 +40,10 @@ all: $(TARGET)
 
 %.o:%.f90
 	$(COMPILE_F90) $<
+
+%.o:%.F90
+	$(COMPILE_F90) -cpp $<
+
 
 $(TARGET): $(OBJS)
 	$(LINK) $(OBJS) -o $(TARGET) $(LIBS)

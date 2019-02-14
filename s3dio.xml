@@ -1,6 +1,6 @@
 <?xml version="1.0"?> 
-<adios -config host -language="C"> 
-    <adios -group name="s3dio" coordination -communicator="comm"> 
+<adios-config host-language="Fortran"> 
+    <adios-group name="s3dio" coordination-communicator="comm"> 
 
         <!-- Global array dimensions -->
         <var name="x" gwrite="g_sizes(1)" type="integer"/> 
@@ -21,28 +21,28 @@
         <var name="nsc" gwrite="g_sizes(4)" type="integer"/> 
 
         <!-- yspecies -->
-        <global -bounds dimensions="x, y, z, nsc" offsets="sx, sy, sz, 0"> 
-            <var name="yspecies" gwrite="yspecies" type="double" dimensions="lx, ly, lz, nsc" /> 
-        </global -bounds> 
+        <global-bounds dimensions="x, y, z, nsc" offsets="sx, sy, sz, 0"> 
+            <var name="yspecies" gwrite="yspecies" gread="yspecies" type="double" dimensions="lx, ly, lz, nsc" read="yes"/> 
+        </global-bounds> 
 
         <!-- u -->
-        <global -bounds dimensions="x, y, z, 3" offsets="sx, sy, sz, 0"> 
-            <var name="u" gwrite="u" type="double" dimensions="lx, ly, lz, 3" /> 
-        </global -bounds> 
+        <global-bounds dimensions="x, y, z, 3" offsets="sx, sy, sz, 0"> 
+            <var name="u" gwrite="u" gread="u" type="double" dimensions="lx, ly, lz, 3" read="yes"/> 
+        </global-bounds> 
 
         <!-- pressure and temp -->
-        <global -bounds dimensions="x, y, z" offsets="sx, sy, sz"> 
-            <var name="pressure" gwrite="pressure" type="double" dimensions="lx, ly, lz" /> 
-            <var name="temp" gwrite="pressure" type="temp" dimensions="lx, ly, lz" /> 
-        </global -bounds> 
+        <global-bounds dimensions="x, y, z" offsets="sx, sy, sz"> 
+            <var name="pressure" gwrite="pressure" gread="pressure" type="double" dimensions="lx, ly, lz" read="yes"/> 
+            <var name="temp" gwrite="temp" gread="temp" type="double" dimensions="lx, ly, lz" read="yes"/> 
+        </global-bounds> 
 
         <!-- Attributes -->
-        <var name="time_var" gwrite="time" type="double"/> 
-        <var name="tstep_var" gwrite="tstep" type="double"/> 
-        <var name="time_save_var" gwrite="time_save" type="double"/> 
-        <attribute name="time" path="/s3dio" var="time_var" type="double"/>
-        <attribute name="tstep" path="/s3dio" var="tstep_var" type="double"/>
-        <attribute name="time_save" path="/s3dio" var="time_save_var" type="double"/>
-    </adios -group>
-    <method group="temperature" method="MPI"/> <buffer max-size -MB="2"/>
-</adios -config>
+        <var name="time_var" gwrite="time" gread="time" type="double" read="yes"/> 
+        <var name="tstep_var" gwrite="tstep" gread="tstep" type="double" read="yes"/> 
+        <var name="time_save_var" gwrite="time_save" gread="time_save" type="double" read="yes"/> 
+        <attribute name="time" var="time_var"/>
+        <attribute name="tstep" var="tstep_var"/>
+        <attribute name="time_save" var="time_save_var"/>
+    </adios-group>
+    <method group="s3dio" method="MPI"/> <buffer max-size-MB="2"/>
+</adios-config>

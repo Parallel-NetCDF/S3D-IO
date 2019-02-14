@@ -9,7 +9,7 @@
           use mpi
           use runtime_m,      only: time, time_ref, run_title
           use io_profiling_m, only: dir_path
-          use pnetcdf_m,      only: pnetcdf_write
+          use adios_m,      only: adios_write_s3d
           implicit none
 
           ! local variables
@@ -24,7 +24,8 @@
                      trim(adjustl(time_ext))//'.field.nc'
 
           ! call PnetCDF APIs to write data to file
-          call pnetcdf_write(filename)
+          ! call pnetcdf_write(filename)
+          call adios_write_s3d(filename)
 
       end subroutine write_savefile
 
@@ -34,7 +35,7 @@
           use mpi
           use runtime_m,      only: time, time_ref, run_title
           use io_profiling_m, only: dir_path
-          use pnetcdf_m,      only: pnetcdf_read
+          use adios_m,      only: adios_read_s3d
           use topology_m,     only : myid
           implicit none
 
@@ -61,7 +62,8 @@
           endif
 
           ! call PnetCDF APIs to read data from file
-          call pnetcdf_read(filename)
+          ! call pnetcdf_read(filename)
+          call adios_read_s3d(filename)
 
       end subroutine read_savefile
 

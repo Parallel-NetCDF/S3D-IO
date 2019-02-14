@@ -1,0 +1,36 @@
+adios_groupsize = 0
+adios_groupsize = adios_groupsize + 4_8 &
+                + 4_8 &
+                + 4_8 &
+                + 4_8 &
+                + 4_8 &
+                + 4_8 &
+                + 4_8 &
+                + 4_8 &
+                + 4_8 &
+                + 4_8 &
+                + 8_8 * (subsizes(1)) * ( subsizes(2)) * ( subsizes(3)) * ( g_sizes(4)) &
+                + 8_8 * (subsizes(1)) * ( subsizes(2)) * ( subsizes(3)) * ( 3) &
+                + 8_8 * (subsizes(1)) * ( subsizes(2)) * ( subsizes(3)) &
+                + 8_8 * (subsizes(1)) * ( subsizes(2)) * ( subsizes(3)) &
+                + 8_8 &
+                + 8_8 &
+                + 8_8
+call adios_group_size (adios_handle, adios_groupsize, adios_totalsize, adios_err)
+call adios_write (adios_handle, "x", g_sizes(1), adios_err)
+call adios_write (adios_handle, "y", g_sizes(2), adios_err)
+call adios_write (adios_handle, "z", g_sizes(3), adios_err)
+call adios_write (adios_handle, "lx", subsizes(1), adios_err)
+call adios_write (adios_handle, "ly", subsizes(2), adios_err)
+call adios_write (adios_handle, "lz", subsizes(3), adios_err)
+call adios_write (adios_handle, "sx", starts(1), adios_err)
+call adios_write (adios_handle, "sy", starts(2), adios_err)
+call adios_write (adios_handle, "sz", starts(3), adios_err)
+call adios_write (adios_handle, "nsc", g_sizes(4), adios_err)
+call adios_write (adios_handle, "yspecies", yspecies, adios_err)
+call adios_write (adios_handle, "u", u, adios_err)
+call adios_write (adios_handle, "pressure", pressure, adios_err)
+call adios_write (adios_handle, "temp", temp, adios_err)
+call adios_write (adios_handle, "time_var", time, adios_err)
+call adios_write (adios_handle, "tstep_var", tstep, adios_err)
+call adios_write (adios_handle, "time_save_var", time_save, adios_err)
