@@ -44,5 +44,5 @@
         <attribute name="tstep" var="tstep_var"/>
         <attribute name="time_save" var="time_save_var"/>
     </adios-group>
-    <method group="s3dio" method="MPI"/> <buffer max-size-MB="2"/>
+    <method group="s3dio" method="MPI"/>
 </adios-config>

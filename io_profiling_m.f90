@@ -184,7 +184,7 @@
  2004         FORMAT(A ,F10.2, A)
  2005         FORMAT(A, i7,' x',i7,' x',i7)
 
-              write(6,*) '++++ I/O is done through PnetCDF ++++'
+              write(6,*) '++++ I/O is done through ADIOS/PnetCDF ++++'
               if (method .EQ. 0) then
                   write(6,*) 'I/O method          : blocking APIs'
               else

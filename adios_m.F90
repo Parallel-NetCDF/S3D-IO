@@ -78,10 +78,6 @@
 
 #include "gwrite_s3dio.fh"
       
-          put_size = 0
-          write_amount = write_amount + put_size
-          write_num    = write_num + 4
-
           time_end = MPI_Wtime()
           writeT = writeT + time_end - time_start
 
@@ -92,6 +88,10 @@
           call adios_finalize (myid, adios_err);
 
           closeT = closeT + MPI_Wtime() - time_end
+
+          inquire(FILE=filename, SIZE=put_size)
+          write_amount = write_amount + put_size
+          write_num    = write_num + 4
 
       end subroutine adios_write_s3d
 
@@ -207,9 +207,6 @@
         err = nfmpi_inq_get_size(ncid, get_size)
         if (err .ne. NF_NOERR) call handle_err('nfmpi_inq_get_size', err)
 
-        read_amount = read_amount + get_size
-        read_num    = read_num + 4
-
         time_end = MPI_Wtime()
         readT = readT + time_end - time_start
 
@@ -217,6 +214,10 @@
         if (err .ne. NF_NOERR) call handle_err('nfmpi_close', err)
 
         closeT = closeT + MPI_Wtime() - time_end
+
+        ! inquire(FILE=filename, SIZE=put_size)
+        read_amount = read_amount + get_size
+        read_num    = read_num + 4
 
       end subroutine adios_read_s3d
 
