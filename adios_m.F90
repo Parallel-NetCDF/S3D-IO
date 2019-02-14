@@ -89,7 +89,11 @@
 
           closeT = closeT + MPI_Wtime() - time_end
 
-          inquire(FILE=filename, SIZE=put_size)
+          if (myid .EQ. 0) then
+            inquire(FILE=filename, SIZE=put_size)
+          else 
+            put_size = 0
+          endif
           write_amount = write_amount + put_size
           write_num    = write_num + 4
 
